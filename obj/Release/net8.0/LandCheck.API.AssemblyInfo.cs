@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LandCheck.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab7af492e88304e6aaef19bc5d265da1c64984f7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64b3950a6724b995b9e2886d129bf41bc86063e2")]
 [assembly: System.Reflection.AssemblyProductAttribute("LandCheck.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LandCheck.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

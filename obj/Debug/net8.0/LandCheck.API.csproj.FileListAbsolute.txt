@@ -175,3 +175,4 @@ C:\Projects\LandCheck\COMPLETE\backend\obj\Debug\net8.0\refint\LandCheck.API.dll
 C:\Projects\LandCheck\COMPLETE\backend\obj\Debug\net8.0\LandCheck.API.pdb
 C:\Projects\LandCheck\COMPLETE\backend\obj\Debug\net8.0\LandCheck.API.genruntimeconfig.cache
 C:\Projects\LandCheck\COMPLETE\backend\obj\Debug\net8.0\ref\LandCheck.API.dll
+c:\Projects\LandCheck\COMPLETE\backend\obj\Debug\net8.0\LandCheck.API.sourcelink.json

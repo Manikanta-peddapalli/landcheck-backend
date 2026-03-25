@@ -19,6 +19,10 @@ builder.Services.AddSwaggerGen(c =>
         Contact     = new OpenApiContact { Name = "LandCheck Team", Email = "support@landcheck.in" }
     });
 });
+var connectionString = Environment.GetEnvironmentVariable
+  ("ConnectionStrings__DefaultConnection")
+  ?? builder.Configuration.GetConnectionString
+  ("DefaultConnection");
 
 builder.Services.AddDbContext<LandCheckDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
