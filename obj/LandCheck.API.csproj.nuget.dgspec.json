@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Projects\\LandCheck\\COMPLETE\\backend\\LandCheck.API.csproj": {}
+    "C:\\Projects\\LandCheck\\COMPLETE\\backend\\LandCheck.API.csproj": {}
   },
   "projects": {
-    "c:\\Projects\\LandCheck\\COMPLETE\\backend\\LandCheck.API.csproj": {
+    "C:\\Projects\\LandCheck\\COMPLETE\\backend\\LandCheck.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Projects\\LandCheck\\COMPLETE\\backend\\LandCheck.API.csproj",
+        "projectUniqueName": "C:\\Projects\\LandCheck\\COMPLETE\\backend\\LandCheck.API.csproj",
         "projectName": "LandCheck.API",
-        "projectPath": "c:\\Projects\\LandCheck\\COMPLETE\\backend\\LandCheck.API.csproj",
+        "projectPath": "C:\\Projects\\LandCheck\\COMPLETE\\backend\\LandCheck.API.csproj",
         "packagesPath": "C:\\Users\\Mani kanta\\.nuget\\packages\\",
-        "outputPath": "c:\\Projects\\LandCheck\\COMPLETE\\backend\\obj\\",
+        "outputPath": "C:\\Projects\\LandCheck\\COMPLETE\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

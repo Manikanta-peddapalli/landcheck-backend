@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LandCheck.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64b3950a6724b995b9e2886d129bf41bc86063e2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ecca862a3689e8a871a9101d8d2461de18124b0f")]
 [assembly: System.Reflection.AssemblyProductAttribute("LandCheck.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LandCheck.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,150 @@
+================================================================
+DEPLOY LANDCHECK TO RENDER.COM — EXACT STEPS
+By the end: https://landcheck-api.onrender.com — LIVE FOREVER!
+================================================================
+
+WHAT YOU NEED:
+- GitHub account (you have it)
+- Render.com account (free - create now)
+- 30 minutes
+
+================================================================
+PART 1 — UPDATE YOUR BACKEND FILES (10 minutes)
+================================================================
+
+STEP 1 — Replace these files in your backend folder:
+C:\Projects\LandCheck\COMPLETE\backend\
+
+Replace these 3 files with the ones I gave you:
+✅ Program.cs          → use new Program.cs
+✅ LandCheck.API.csproj → use new .csproj
+✅ appsettings.json    → use new appsettings.json
+
+STEP 2 — Push to GitHub
+Open Git Bash:
+
+cd C:/Projects/LandCheck/COMPLETE/backend
+git add .
+git commit -m "feat: add PostgreSQL + Render deployment"
+git push origin main
+
+================================================================
+PART 2 — CREATE RENDER ACCOUNT (5 minutes)
+================================================================
+
+STEP 3 — Go to render.com
+Click "Get Started for Free"
+Sign up with GitHub (use your GitHub account)
+This connects Render to your GitHub automatically!
+
+================================================================
+PART 3 — CREATE POSTGRESQL DATABASE (5 minutes)
+================================================================
+
+STEP 4 — Create Database
+In Render dashboard:
+1. Click "New +"
+2. Click "PostgreSQL"
+3. Fill:
+   Name:     landcheck-db
+   Region:   Singapore (closest to India)
+   Plan:     FREE
+4. Click "Create Database"
+5. Wait 2 minutes for it to create
+
+STEP 5 — Copy the Database URL
+After database is created:
+1. Click on "landcheck-db"
+2. Scroll down to "Connections"
+3. Copy the "Internal Database URL"
+   It looks like: postgresql://user:password@host/dbname
+4. SAVE THIS URL — you need it in next step
+
+================================================================
+PART 4 — DEPLOY YOUR BACKEND (10 minutes)
+================================================================
+
+STEP 6 — Create Web Service
+In Render dashboard:
+1. Click "New +"
+2. Click "Web Service"
+3. Click "Connect a repository"
+4. Select: Manikanta-peddapalli/landcheck-backend
+5. Click "Connect"
+
+STEP 7 — Configure the service
+Fill these settings:
+   Name:             landcheck-api
+   Region:           Singapore
+   Branch:           main
+   Runtime:          Docker
+   Plan:             FREE
+
+STEP 8 — Add Environment Variables
+Scroll down to "Environment Variables"
+Click "Add Environment Variable" for each:
+
+Key: DATABASE_URL
+Value: (paste the Internal Database URL from Step 5)
+
+Key: JWT_SECRET
+Value: Mani-LandCheck-7x9k2p-mQ4rL8vNs-2026-Secure-Key-Render
+
+Key: ASPNETCORE_ENVIRONMENT
+Value: Production
+
+STEP 9 — Deploy!
+Click "Create Web Service"
+Wait 5-10 minutes for first deployment.
+You will see logs showing deployment progress.
+
+================================================================
+PART 5 — UPDATE FRONTEND (5 minutes)
+================================================================
+
+STEP 10 — After deployment succeeds, you get URL like:
+https://landcheck-api.onrender.com
+
+STEP 11 — Update App.jsx line 96:
+Change:
+const API_BASE = "https://localhost:58473/api";
+
+To:
+const API_BASE = "https://landcheck-api.onrender.com/api";
+
+STEP 12 — Push frontend to Vercel:
+cd C:/Projects/LandCheck/landcheck-
+git add .
+git commit -m "feat: connect to Render backend"
+git push origin main
+
+================================================================
+DONE! TEST IT!
+================================================================
+
+Go to: https://landcheck-frontend.vercel.app
+Click "Register here"
+Fill your details
+Click "Create Account"
+
+✅ Account created in PostgreSQL database on Render!
+✅ Works 24/7 even when your computer is OFF!
+✅ Permanent URL — never changes!
+
+================================================================
+IMPORTANT NOTES
+================================================================
+
+FREE PLAN LIMITATION:
+Render free plan "sleeps" after 15 minutes of no traffic.
+First request after sleep takes 30-60 seconds to wake up.
+This is fine for now — upgrade to paid ($7/month) before launch.
+
+YOUR URLs AFTER DEPLOYMENT:
+Backend API:  https://landcheck-api.onrender.com
+Swagger:      https://landcheck-api.onrender.com/swagger
+Frontend:     https://landcheck-frontend.vercel.app
+
+================================================================
+IF YOU GET ANY ERROR — TAKE PHOTO AND SHOW CLAUDE!
+================================================================
