@@ -53,10 +53,11 @@ string connectionString;
 
 if (!string.IsNullOrEmpty(databaseUrl))
 {
-    // Convert Render's DATABASE_URL to Npgsql format
-    var uri = new Uri(databaseUrl);
-    var userInfo = uri.UserInfo.Split(':');
-    connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]};SSL Mode=Require;Trust Server Certificate=true";
+    // Use DATABASE_URL directly — Npgsql accepts postgresql:// format
+    // Just ensure SSL is required for Render
+    connectionString = databaseUrl;
+    if (!connectionString.Contains("sslmode") && !connectionString.Contains("SSL Mode"))
+        connectionString += (connectionString.Contains("?") ? "&" : "?") + "sslmode=require";
 }
 else
 {
