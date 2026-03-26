@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- EF Core + PostgreSQL (for Render) -->
+    <!-- PostgreSQL -->
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools"    Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design"   Version="8.0.0" />
@@ -25,11 +25,11 @@
     <!-- Swagger -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 
-    <!-- PDF Generation -->
-    <PackageReference Include="QuestPDF" Version="2024.3.0" />
-
     <!-- Excel export -->
     <PackageReference Include="ClosedXML" Version="0.102.1" />
+
+    <!-- NOTE: Tesseract and QuestPDF removed — crash on Linux/Docker -->
+    <!-- Add back later when needed with proper Linux native libs -->
   </ItemGroup>
 
 </Project>
