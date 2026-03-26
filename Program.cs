@@ -1,8 +1,3 @@
-// ============================================================
-//  LandCheck — Program.cs for Render.com Deployment
-//  FIXED VERSION — Properly converts DATABASE_URL
-// ============================================================
-
 using System.Text;
 using LandCheck.API.Data;
 using LandCheck.API.Services;
@@ -31,7 +26,7 @@ builder.Services.AddSwaggerGen(c =>
     }});
 });
 
-// ── PostgreSQL — Convert DATABASE_URL to Npgsql format ─────
+// ── PostgreSQL ─────────────────────────────────────────────
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 string connectionString;
 
@@ -49,7 +44,7 @@ if (!string.IsNullOrEmpty(databaseUrl))
 else
 {
     connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? throw new InvalidOperationException("No database connection string found.");
+        ?? throw new InvalidOperationException("No connection string found.");
 }
 
 builder.Services.AddDbContext<LandCheckDbContext>(options =>
@@ -107,10 +102,19 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+// ── Create tables if not exist ─────────────────────────────
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<LandCheckDbContext>();
-    db.Database.Migrate();
+    try
+    {
+        // EnsureCreated is safer than Migrate for first deployment
+        db.Database.EnsureCreated();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Database setup error: {ex.Message}");
+    }
 }
 
 app.Run();
