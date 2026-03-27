@@ -25,11 +25,7 @@
     <!-- Swagger -->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 
-    <!-- Excel export -->
-    <PackageReference Include="ClosedXML" Version="0.102.1" />
-
-    <!-- NOTE: Tesseract and QuestPDF removed — crash on Linux/Docker -->
-    <!-- Add back later when needed with proper Linux native libs -->
+    <!-- NOTE: Removed ClosedXML, Tesseract, QuestPDF - all crash on Render free tier -->
   </ItemGroup>
 
 </Project>
