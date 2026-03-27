@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,11 +82,13 @@ builder.Services.AddScoped<IRiskAnalysisService, RiskAnalysisService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 
+// ── CORS — Allow ALL origins (fixes Vercel → Render issue) ─
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
-        policy.WithOrigins("http://localhost:5173", "https://landcheck-frontend.vercel.app")
-              .AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+    options.AddPolicy("AllowAll", policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
 });
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
@@ -97,12 +98,14 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LandCheck API v1"));
-app.UseCors("AllowFrontend");
+
+// ── Use AllowAll CORS ──────────────────────────────────────
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// ── Create tables using raw SQL if they don't exist ────────
+// ── Create tables using raw SQL ────────────────────────────
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<LandCheckDbContext>();
@@ -110,7 +113,6 @@ using (var scope = app.Services.CreateScope())
     {
         Console.WriteLine("Creating database tables...");
 
-        // Create Users table
         db.Database.ExecuteSqlRaw(@"
             CREATE TABLE IF NOT EXISTS ""Users"" (
                 ""Id"" SERIAL PRIMARY KEY,
@@ -127,7 +129,6 @@ using (var scope = app.Services.CreateScope())
                 ""LastLoginAt"" TIMESTAMP NOT NULL DEFAULT NOW()
             );");
 
-        // Create RefreshTokens table
         db.Database.ExecuteSqlRaw(@"
             CREATE TABLE IF NOT EXISTS ""RefreshTokens"" (
                 ""Id"" SERIAL PRIMARY KEY,
@@ -139,7 +140,6 @@ using (var scope = app.Services.CreateScope())
                 ""CreatedByIp"" VARCHAR(50)
             );");
 
-        // Create LandRecords table
         db.Database.ExecuteSqlRaw(@"
             CREATE TABLE IF NOT EXISTS ""LandRecords"" (
                 ""Id"" SERIAL PRIMARY KEY,
@@ -156,11 +156,11 @@ using (var scope = app.Services.CreateScope())
                 ""UserId"" INTEGER
             );");
 
-        Console.WriteLine("✅ Database tables created successfully!");
+        Console.WriteLine("Database tables ready!");
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Table creation note: {ex.Message}");
+        Console.WriteLine($"DB note: {ex.Message}");
     }
 }
 
