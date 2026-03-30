@@ -76,13 +76,22 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("GovernmentOnly",p => p.RequireRole("Government"));
 });
 
+// ── Services ───────────────────────────────────────────────
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ILandRecordService, LandRecordService>();
 builder.Services.AddScoped<IRiskAnalysisService, RiskAnalysisService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<IReportService, ReportService>();
+builder.Services.AddScoped<IDigiLockerService, DigiLockerService>();
 
-// ── CORS — Allow ALL origins (fixes Vercel → Render issue) ─
+// ── Surepass HTTP Client ───────────────────────────────────
+builder.Services.AddHttpClient("Surepass", client =>
+{
+    client.BaseAddress = new Uri("https://sandbox.surepass.app");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+// ── CORS ───────────────────────────────────────────────────
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -98,21 +107,17 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LandCheck API v1"));
-
-// ── Use AllowAll CORS ──────────────────────────────────────
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-// ── Create tables using raw SQL ────────────────────────────
+// ── Create tables ──────────────────────────────────────────
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<LandCheckDbContext>();
     try
     {
-        Console.WriteLine("Creating database tables...");
-
         db.Database.ExecuteSqlRaw(@"
             CREATE TABLE IF NOT EXISTS ""Users"" (
                 ""Id"" SERIAL PRIMARY KEY,
@@ -156,7 +161,7 @@ using (var scope = app.Services.CreateScope())
                 ""UserId"" INTEGER
             );");
 
-        Console.WriteLine("Database tables ready!");
+        Console.WriteLine("✅ Database tables ready!");
     }
     catch (Exception ex)
     {
